@@ -15,6 +15,10 @@ export const FONT_SIZE = {
   h24: 24,
   h25: 25,
   h26: 26,
+  h27: 27,
+  h28: 28,
+  h29: 29,
+  h30: 30,
 };
 
 export const FONT_WEIGHT = {
@@ -33,4 +37,5 @@ export const FONT_FAMILY = {
   GILORY_BOLD: 'Gilroy-Bold',
   GILORY_REGULAR: 'Gilroy-Regular',
   GILROY_SEMIBOLD: 'Gilroy-SemiBold',
+  GILORY_MEDIUM: 'Gilroy-Medium',
 };

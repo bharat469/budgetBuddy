@@ -13,7 +13,7 @@ import {COLORS} from '../helpers/constant/colors';
 
 const {width, height} = Dimensions.get('window');
 const ImageBaseScreen = props => {
-  const {image = require('../assets/png/login.png'), children} = props;
+  const {image = require('../assets/png/login.png'), children, SectionHeight= height / 2.5,} = props;
   return (
     <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
     <StatusBar
@@ -23,7 +23,7 @@ const ImageBaseScreen = props => {
     />
 
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.sectionStyle}>{children}</View>
+      <View style={[styles.sectionStyle,{height:SectionHeight}]}>{children}</View>
     </SafeAreaView>
   </ImageBackground>
   );
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: height / 2.5,
+   
     width: width,
     borderTopRightRadius: 32,
     borderTopLeftRadius: 32,
