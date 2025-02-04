@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isLoading: false,
   loginData: {},
-  isSendOtp:false,
+
   loginError: null,
   userToken: '',
-  isVerified:false
+  isVerified:false,
+  isSendOtp:false,
+ SendOtpData:{}
 };
 
 const AuthSlice = createSlice({
@@ -28,10 +30,14 @@ const AuthSlice = createSlice({
         state.isSendOtp=false;
         state.userToken=''
     },
+    sendOtpSuccess:(state,action)=>{
+    state.SendOtpData=action.payload;
+    state.isSendOtp=true
+    }
     
   },
 });
 
-export const { loginDataSuccess, loginDataError, saveUserToken ,resetAllChecks} = AuthSlice.actions;
+export const { loginDataSuccess, loginDataError, saveUserToken ,resetAllChecks,sendOtpSuccess} = AuthSlice.actions;
 
 export default AuthSlice.reducer;

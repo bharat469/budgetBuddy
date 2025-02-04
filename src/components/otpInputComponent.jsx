@@ -73,6 +73,8 @@ const OtpInputComponent = ({
             onChangeText={text => handleInputChange(text, index)}
             value={otp[index]}
             onKeyPress={({ nativeEvent }) => handleKeyPress(nativeEvent.key, index)}
+            textContentType='oneTimeCode'
+            autoComplete='sms-otp'
           />
         ))}
       </View>

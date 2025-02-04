@@ -32,7 +32,7 @@ const Navigation = () => {
     GetTokenUser();
   }, []);
 
-  console.log('Token', token);
+
 
   return (
     <NavigationContainer>

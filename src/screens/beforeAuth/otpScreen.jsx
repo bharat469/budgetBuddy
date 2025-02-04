@@ -11,7 +11,8 @@ import { REDUX_NAME } from '../../helpers/constant/reduxName';
 const OtpScreen = ({route}) => {
   const { loginData, data} = route.params
   const {countryCode}=useSelector(state=>state.constant)
-console.log('data',route.params)
+  const {SendOtpData}=useSelector(state=>state.auth)
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(resetAllChecks());
@@ -19,11 +20,11 @@ console.log('data',route.params)
 
   const _hanldeSumbitBtn=(otpNumber)=>{
     let body={
-      "otp_id":loginData?._id,
-       "otp":otpNumber,
-       "country_code":`+${countryCode}`,
-       "contact_number":data?.phoneNumber
+      "confimCode":SendOtpData,
+       "code":otpNumber,
+       
      }
+   
      dispatch({type:REDUX_NAME.SET_VERIFY_OTP,payload:{body}})
     
   }
@@ -34,6 +35,7 @@ console.log('data',route.params)
       <View style={styles.allOtpComponent}>
         <OtpInputComponent 
         onSubmit={_hanldeSumbitBtn}
+        otpLength={6}
         />
         <TextWithBtnLink
           inititText={"Didn't receive code"}

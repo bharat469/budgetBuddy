@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "76806152869",
+    "project_id": "budgetbuddy-a0c99",
+    "storage_bucket": "budgetbuddy-a0c99.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76806152869:android:3ae06f48255cea7fe0e34c",
+        "android_client_info": {
+          "package_name": "com.mrproptek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76806152869-0c3nnn4l1l1fvo3qk8hbb92rgnrv663c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mrproptek",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "76806152869-n3rknbu7dqfmdgqs8ikgr5bb9t48crid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIYnH9QfxTgiEMxX4Wlx8p1EBpKuzYVqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76806152869-n3rknbu7dqfmdgqs8ikgr5bb9t48crid.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "76806152869-oool3nkf3vm9thi50f6nhqdde25j4e1l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.MrProptek"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

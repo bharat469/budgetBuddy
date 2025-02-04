@@ -15,8 +15,8 @@ import DownArrow from '../assets/svg/downArrow.svg';
 import {COLORS} from '../helpers/constant/colors';
 import {FONT_FAMILY, FONT_SIZE} from '../helpers/constant/font';
 import {parsePhoneNumberFromString} from 'libphonenumber-js';
-import { useDispatch } from 'react-redux';
-import { saveCountryCode } from '../helpers/redux/slice/constantSaveSlice';
+import {useDispatch} from 'react-redux';
+import {saveCountryCode} from '../helpers/redux/slice/constantSaveSlice';
 
 const {Width, Height} = Dimensions.get('window');
 
@@ -29,11 +29,12 @@ const InputComponent = props => {
     style,
     mode = '',
     basicInputTitle = '',
-    sendCodePhoneno=()=>{}
+    sendCodePhoneno = () => {},
+    errorAfterBtnClick = '',
   } = props;
   const [show, setShow] = useState(false);
   const [countryCode, setCountryCode] = useState('91');
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [selectedCountry, setSelectedCountry] = useState({
     name: 'United States',
     dial_code: '91',
@@ -41,16 +42,18 @@ const InputComponent = props => {
   });
   const [error, setError] = useState('');
 
+ 
+  useEffect(() => {
+    dispatch(saveCountryCode(countryCode));
 
-  useEffect(()=>{
-  dispatch(saveCountryCode(countryCode))
-  },[countryCode])
+    setError(errorAfterBtnClick);
+  }, [countryCode, errorAfterBtnClick]);
 
   const handleSelectCountry = country => {
     setCountryCode(country.callingCode[0]);
     setShow(false);
     setSelectedCountry(country);
-    sendCodePhoneno(countryCode)
+    sendCodePhoneno(countryCode);
   };
 
   const _handleOnChange = item => {
@@ -60,7 +63,7 @@ const InputComponent = props => {
 
   const validatePhoneNumber = (phoneNumber, countryCode) => {
     let finalPhoneNumber = `+${countryCode + phoneNumber}`;
-    sendCodePhoneno(countryCode)
+    sendCodePhoneno(countryCode);
     const parsedNumber = parsePhoneNumberFromString(finalPhoneNumber);
     console.log(parsedNumber);
     if (parsedNumber && parsedNumber.isValid()) {
@@ -78,7 +81,7 @@ const InputComponent = props => {
   const InputWithCountryCode = () => {
     return (
       <View style={styles.inputWithCountryCodeStyle}>
-        <View >
+        <View>
           <Text style={styles.phoneNumberText}>Phone Number</Text>
           <TouchableWithoutFeedback onPress={() => setShow(true)}>
             <View style={styles.countrySelectView}>
@@ -86,7 +89,7 @@ const InputComponent = props => {
                 withFlag
                 withAlphaFilter
                 withFilter
-                countryCode={selectedCountry?.cca2}
+                countryCode={selectedCountry?.cca2 || 'IN'}
                 onSelect={handleSelectCountry}
                 visible={show}
                 onClose={() => setShow(false)}
@@ -138,6 +141,7 @@ const InputComponent = props => {
         : BasicInput()}
       {/* Error Message */}
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {/* {errorAfterBtnClick ? <Text style={styles.errorText}>{errorAfterBtnClick}</Text> : null} */}
     </View>
   );
 };
@@ -154,8 +158,8 @@ const styles = StyleSheet.create({
     flex: 0.9,
     borderWidth: 1,
     flexDirection: 'row',
-      borderRadius: 25,
-    borderColor: COLORS.lightBorderWithOpacity,
+    borderRadius: 15,
+    borderColor: COLORS.white,
     alignItems: 'center',
   },
   countrySelectView: {
@@ -164,19 +168,18 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 8,
     alignItems: 'center',
-    borderRadius: 25,
-    borderColor: COLORS.lightBorderWithOpacity,
+    borderRadius: 15,
+    borderColor: COLORS.white,
     marginHorizontal: 12,
-    
   },
   inputWithCountryCodeStyle: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    marginLeft:22
+    marginLeft: 22,
   },
   inputTab: {
     flex: 1,
-    color: COLORS.black,
+    color: COLORS.white,
     fontFamily: FONT_FAMILY.GILROY_SEMIBOLD,
     fontSize: FONT_SIZE.h14,
     marginLeft: 6,
@@ -184,8 +187,15 @@ const styles = StyleSheet.create({
   },
   phoneNumberText: {
     marginVertical: 6,
-    left:8,
-    color: COLORS.fontDarkColor,
+    left: 8,
+    color: COLORS.white,
+    fontSize: FONT_SIZE.h14,
+    fontFamily: FONT_FAMILY.GILORY_MEDIUM,
+  },
+  basicTextStyle: {
+    marginVertical: 6,
+    left: 6,
+    color: COLORS.white,
     fontSize: FONT_SIZE.h14,
     fontFamily: FONT_FAMILY.GILORY_MEDIUM,
   },
@@ -202,6 +212,8 @@ const styles = StyleSheet.create({
   },
   countryPickerStyle: {
     marginHorizontal: 6,
+    color: COLORS.white,
+    fontSize: FONT_SIZE.h14,
   },
   basicInputStyle: {
     //  backgroundColor:'blue',
@@ -211,8 +223,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginVertical: 6,
     height: 52,
-    borderRadius: 25,
-    borderColor: COLORS.lightBorderWithOpacity,
-    
+    borderRadius: 15,
+    borderColor: COLORS.white,
   },
 });

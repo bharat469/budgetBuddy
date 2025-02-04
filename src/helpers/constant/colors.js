@@ -9,5 +9,8 @@ export const COLORS={
     lightBorder:'#EEEEEE',
     fontLightColor2:'#848484',
     errorColor:'#FF0000',
-    lightBorderWithOpacity:'rgba(122, 122, 122, 0.2)'
+    lightBorderWithOpacity:'rgba(122, 122, 122, 0.2)',
+    primaryColor:'#161B1F',
+    indicatorDisabledColor:'#EAEBFF',
+    secondaryColor:'#FC800B',
 }

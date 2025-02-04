@@ -50,12 +50,16 @@ export default MyButton;
 const styles = StyleSheet.create({
   btnView: {
     padding: 18,
-    shadowColor: '#435391',
-    shadowOffset: {width: 0, height: 14},
-    shadowOpacity: 0.3,
-    shadowRadius: 33.6,
-    elevation: 6,
-    backgroundColor: COLORS.btnPrimaryColor,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    
+    elevation: 5,
+    backgroundColor: COLORS.secondaryColor,
     borderRadius: 25,
   },
   btnWithIconView: {
@@ -75,8 +79,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   btnTextStyle: {
-    color: COLORS.white,
-    fontFamily: FONT_FAMILY.GILROY_SEMIBOLD,
+    color: COLORS.btnPrimaryColor,
+    fontFamily: FONT_FAMILY.GILORY_BOLD,
     fontSize: FONT_SIZE.h16,
   },
   iconContainer: {
