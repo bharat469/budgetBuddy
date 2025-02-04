@@ -13,9 +13,9 @@ import {COLORS} from '../helpers/constant/colors';
 
 const {width, height} = Dimensions.get('window');
 const ImageBaseScreen = props => {
-  const {image = require('../assets/png/login.png'), children, SectionHeight= height / 2.5,} = props;
+  const {image = require('../assets/png/login2.png'), children, SectionHeight= height / 2.5,} = props;
   return (
-    <ImageBackground source={image} resizeMode="cover" style={{ flex: 1 }}>
+    <ImageBackground source={image} resizeMode='center' style={{ flex: 1 }}>
     <StatusBar
       barStyle='light-content'
       translucent={true}

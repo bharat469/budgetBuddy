@@ -1,49 +1,83 @@
 import {call, put, takeLatest} from 'redux-saga/effects';
 import {REDUX_NAME} from '../../constant/reduxName';
-import {SendOtp, VerifyOtp} from '../api/authApi';
-import {loginDataError, loginDataSuccess, saveUserToken} from '../slice/authSlice';
+import {
+  FacebookLoginApi,
+  GoogleSingInApi,
+  SendOtpApi,
+  VerifyOtp,
+} from '../api/authApi';
+import {
+  loginDataError,
+  loginDataSuccess,
+  saveUserToken,
+  sendOtpSuccess,
+} from '../slice/authSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function* loginDataSaga(action) {
+function* GoogleSiginSaga(action) {
   try {
-  
-    const response = yield call(SendOtp, action.payload.body);
-     
+    const response = yield call(GoogleSingInApi);
     if (response) {
-      yield put(loginDataSuccess(response?.data));
-    } else {
-     
-      yield put(loginDataError('ERROR IN SENDING OTP'));
+      AsyncStorage.setItem('USERTOKEN', response?.uid).then(() =>
+        console.log('Token Saved Succesfully'),
+      );
+      yield put(saveUserToken(response?.uid));
+      yield put(loginDataSuccess(response));
     }
   } catch (e) {
-    console.log('Error during login data fetch:', e);
-   
+    console.log(e, 'ERROR IN GOOGLE_SIGIN_IN');
     yield put(loginDataError('An unexpected error occurred.'));
   }
 }
-function* VerifyDataSaga(action) {
-  try {
-  
-    const response = yield call(VerifyOtp, action.payload.body);
-  
-    if (response) {
-      AsyncStorage.setItem('USERTOKEN',response?.data?.token).then(()=>console.log('SUCCESSFULLY Saved'))
-      yield put(saveUserToken(response?.data?.token))
-      console.log(response)
 
-    } else {
-       
-      yield put(loginDataError('ERROR IN VERIFY OTP'));
+function* FaceBookSiginSaga(action) {
+  try {
+    const data = yield call(FacebookLoginApi);
+    if (data) {
+      AsyncStorage.setItem('USERTOKEN', data?.uid).then(() =>
+        console.log('Token Saved Succesfully'),
+      );
+      yield put(saveUserToken(data?.uid));
+      yield put(loginDataSuccess(data));
     }
   } catch (e) {
-    console.log('Error during login data fetch:', e);
+    console.log(e, 'ERROR IN FACEBOOK_SIGININ');
+    yield put(loginDataError('An unexpected error occurred.'));
+  }
+}
+function* PhoneSendOtpSaga(action) {
+  try {
+    const data = yield call(SendOtpApi, action.payload);
+
+    if (data) {
+      let verificationId = data.verificationId;
+       yield put(sendOtpSuccess(verificationId));
+    }
+  } catch (e) {
+    console.log(e, 'ERROR IN PHONENUMBER_SIGININ');
+    yield put(loginDataError('An unexpected error occurred.'));
+  }
+}
+function* PhoneVerifyOtpSaga(action) {
+  try {
    
+    const data = yield call(VerifyOtp, action.payload?.body);
+    if (data) {
+      AsyncStorage.setItem('USERTOKEN', data?.user?.uid).then(() =>
+        console.log('Token Saved Succesfully'),
+      );
+      yield put(saveUserToken(data?.user?.uid));
+      yield put(loginDataSuccess(data?.user));
+    }
+  } catch (e) {
+    console.log(e, 'ERROR IN PHONENUMBER_VERIFY_PHONE_NO');
     yield put(loginDataError('An unexpected error occurred.'));
   }
 }
 
 export function* authenticationSaga() {
-
-  yield takeLatest(REDUX_NAME.SET_LOGIN_SCREEN, loginDataSaga);
-  yield takeLatest(REDUX_NAME.SET_VERIFY_OTP,VerifyDataSaga)
+  yield takeLatest(REDUX_NAME.SET_GOOGLE_SIGN_IN, GoogleSiginSaga);
+  yield takeLatest(REDUX_NAME.SET_FACEBOOK_SIGN_IN, FaceBookSiginSaga);
+  yield takeLatest(REDUX_NAME.SET_SEND_OTP, PhoneSendOtpSaga);
+  yield takeLatest(REDUX_NAME.SET_VERIFY_OTP, PhoneVerifyOtpSaga);
 }

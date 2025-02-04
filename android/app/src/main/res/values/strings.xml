@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">MrProptek</string>
+    <string name="app_name">Budget Buddy</string>
+
+<string name="facebook_app_id">1529460064583682</string>
+<string name="fb_login_protocol_scheme">fb1234</string>
+<string name="facebook_client_token">b36c77d2d7dd0a23ec5de61a106954fe9</string>
+
+
 </resources>

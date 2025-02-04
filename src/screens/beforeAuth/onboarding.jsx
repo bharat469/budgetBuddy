@@ -1,60 +1,118 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import ImageBaseScreen from '../../components/imageBaseScreen';
 import MyButton from '../../components/myButton';
 import { FONT_FAMILY, FONT_SIZE, FONT_WEIGHT } from '../../helpers/constant/font';
 import { COLORS } from '../../helpers/constant/colors';
 import { RouteNames } from '../../helpers/constant/routeName';
+import { SVG_NAME } from '../../helpers/constant/svgHelpers';
+import IndicatorWrapper from '../../assets/svg/wrapper/IndicatorWrapper';
+import {_onboardData} from '../../helpers/constant/jsonHelper';
 
 const {width,height}=Dimensions.get('window')
 const OnboardingScreen = (props) => {
+  const [screenIndex, setScreenIndex] = useState(0);
     const _handleNavigation=()=>{
+      if (screenIndex >= _onboardData.length-1) {
         props.navigation.navigate(RouteNames.loginScreen)
+      } else {
+        setScreenIndex(screenIndex + 1);
+      }
     }
+
+    const _renderActiveIcon = iconPostion => {
+      switch (iconPostion) {
+        case 'LEFT':
+          return (
+            <IndicatorWrapper
+              firstFill={COLORS.secondaryColor}
+              secondFill={COLORS.indicatorDisabledColor}
+              thirdFill={COLORS.indicatorDisabledColor}
+            />
+          );
+         
+        case 'MIDDLE':
+          return (
+            <IndicatorWrapper
+              firstFill={COLORS.indicatorDisabledColor}
+              secondFill={COLORS.secondaryColor}
+              thirdFill={COLORS.indicatorDisabledColor}
+            />
+          );
+         
+        case 'RIGHT':
+          return (
+            <IndicatorWrapper
+              firstFill={COLORS.indicatorDisabledColor}
+              secondFill={COLORS.indicatorDisabledColor}
+              thirdFill={COLORS.secondaryColor}
+            />
+          );
+          
+        default:
+          props.navigation.navigate(RouteNames.loginScreen);
+          break;
+      }
+    };
+
+    const _currentData=_onboardData[screenIndex]
+    const _currentIcon=_renderActiveIcon(_currentData?.activeBtn)
+
   return (
-    <ImageBaseScreen>
-      <View style={styles.onboardingSecondaryContainer}>
-        <Text style={styles.headerText}>
-          Discover Your Dream Home in Virtual Reality
+
+    <View style={styles.onboardingStyle}>
+     <View style={styles.onBoardStyle}>
+        <View style={styles.svgIconStyle}>
+          {_currentData?.svgIcon}
+        </View>
+        {/* <IndicatorWrapper/> */}
+        {_currentIcon}
+
+        <Text style={styles.descTextStyle}>
+          {_currentData?.descText}
         </Text>
-        <Text style={styles.discriptionText}>
-          Experience properties like never before! Take a virtual tour and book
-          your perfect home with ease.
-        </Text>
-        <MyButton
-          btnText="Get Started"
-          isRightIcon={true}
-          additionalStyle={{ marginVertical: 12,width:width/1.21}}
-          onClick={_handleNavigation}
-        />
       </View>
-    </ImageBaseScreen>
+           <MyButton
+           btnText="Next"
+          //  isRightIcon={true}
+           additionalStyle={{marginHorizontal:22,alignItems:'center',marginVertical:70}}
+           onClick={_handleNavigation}
+        />
+    </View>
   );
 };
 
 export default OnboardingScreen;
 
 const styles = StyleSheet.create({
-  onboardingSecondaryContainer: {
+
+  onboardingStyle:{
+    flex:1,
+    backgroundColor:COLORS.primaryColor
+  },
+  onBoardStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  svgIconStyle: {
     marginVertical: 22,
+    paddingVertical: 22,
+  },
+  descTextStyle: {
+    marginVertical: 22,
+    fontSize: FONT_SIZE.h26,
     marginHorizontal: 22,
-    alignItems: 'flex-start',
+    textAlign: 'center',
+    color: COLORS.white,
+    lineHeight: 30,
+    letterSpacing: 0.9,
+    fontWeight: FONT_WEIGHT.h800,
   },
-  headerText:{
-    fontSize:FONT_SIZE.h24,
-    fontFamily:FONT_FAMILY.GILORY_BOLD,
-    color:COLORS.fontDarkColor,
-    letterSpacing:0.3,
-    paddingVertical:12,
-    lineHeight:31
+  btnStyle: {
+    marginHorizontal: 22,
+    marginVertical: 32,
+    borderRadius: 25,
+    padding: 18,
   },
-  discriptionText:{
-    fontSize:FONT_SIZE.h16,
-    fontFamily:FONT_FAMILY.GILORY_REGULAR,
-    lineHeight:21,
-    color:COLORS.fontLightColor,
-    width:width/1.4,
-    letterSpacing:0.5,
-    paddingVertical:12,
-  }
 });

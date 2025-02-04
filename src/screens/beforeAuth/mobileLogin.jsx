@@ -22,24 +22,24 @@ import TextWithBtnLink from '../../components/textWithBtnLink';
 import {RouteNames} from '../../helpers/constant/routeName';
 import {useDispatch, useSelector} from 'react-redux';
 import {REDUX_NAME} from '../../helpers/constant/reduxName';
+import parsePhoneNumberFromString from 'libphonenumber-js';
 
 const {Height, Width} = Dimensions.get('window');
 
 const MobileLogin = props => {
   const [data, setData] = useState({
     phoneNumber: '',
-
   });
 
-  const {countryCode}=useSelector(state=>state.constant)
+  const [error, setError] = useState('');
+
+  const {countryCode} = useSelector(state => state.constant);
   const dispatch = useDispatch();
   const {isSendOtp, loginData} = useSelector(state => state.auth);
 
-
-
   useEffect(() => {
     if (isSendOtp) {
-      props.navigation.navigate(RouteNames.otpScreen, {loginData,data});
+      props.navigation.navigate(RouteNames.otpScreen, {loginData, data});
     }
   }, [isSendOtp]);
 
@@ -51,16 +51,29 @@ const MobileLogin = props => {
   };
 
   const _handleSubmit = () => {
-   
-    if (data.phoneNumber ) {
- 
+    let finalPhoneNumber = `+${countryCode + data?.phoneNumber}`;
+
+    const parsedNumber = parsePhoneNumberFromString(finalPhoneNumber);
+
+    if (parsedNumber && parsedNumber.isValid()) {
       let body = {
         send_on: 'number',
         country_code: `+${countryCode}`,
         contact_number: data?.phoneNumber,
       };
+      setError(''); // Valid number
+     
+    } else {
+   
+      if (data?.phoneNumber.length === 0) {
+        // setError(' ');
+      } else {
+        setError('Invalid Phone Number !!!'); // Invalid number
+      }
+    }
 
-      dispatch({type: REDUX_NAME.SET_LOGIN_SCREEN, payload: {body}});
+    if (data.phoneNumber) {
+      dispatch({type: REDUX_NAME.SET_SEND_OTP, payload: {finalPhoneNumber}});
     }
   };
 
@@ -73,7 +86,7 @@ const MobileLogin = props => {
   };
 
   const _storeCountryCode = item => {
-    console.log('item',item)
+  
     setData({...data, country_code: item});
   };
 
@@ -88,6 +101,7 @@ const MobileLogin = props => {
             value={data.phoneNumber}
             onChangeText={_handlePhoneNumber}
             sendCodePhoneno={_storeCountryCode}
+            errorAfterBtnClick={error}
           />
         </View>
         <View style={styles.sectionThree}>
@@ -104,14 +118,14 @@ const MobileLogin = props => {
           />
         </View>
       </View>
-      <View style={{alignItems: 'center', marginVertical: 22}}>
+      <View style={{alignItems: 'center'}}>
         <SepratorComponent />
         <View style={styles.socialView}>
           <SocialMediaIcon socialIcon={SVG_NAME.googleIcon} />
           <SocialMediaIcon socialIcon={SVG_NAME.facebookIcon} />
           <SocialMediaIcon socialIcon={SVG_NAME.appleIcon} />
         </View>
-        <View style={{marginTop: 30}}>
+        <View style={{marginTop: 10}}>
           <TextWithBtnLink
             inititText={'Don’t have an account?'}
             btnText={'Create an account'}
@@ -152,7 +166,7 @@ const styles = StyleSheet.create({
 
   socialView: {
     flexDirection: 'row',
-    marginVertical: 32,
+    marginVertical: 22,
     alignItems: 'center',
   },
 });

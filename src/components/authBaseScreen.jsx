@@ -4,6 +4,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -15,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {COLORS} from '../helpers/constant/colors';
 import {FONT_FAMILY, FONT_SIZE} from '../helpers/constant/font';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {SVG_NAME} from '../helpers/constant/svgHelpers';
 
 const {height, width} = Dimensions.get('window');
 
@@ -24,29 +26,25 @@ const AuthBaseScreen = ({children, headerTitle = '', descTitle = ''}) => {
     navigation.goBack();
   };
   return (
-    <KeyboardAwareScrollView style={{flex:1,backgroundColor:COLORS.white}} 
-    enableOnAndroid={true} 
-      keyboardShouldPersistTaps="handled" 
-    >
+    <KeyboardAwareScrollView
+      style={{flex: 1, backgroundColor: COLORS.primaryColor}}
+      enableOnAndroid={true}
+      keyboardShouldPersistTaps="handled">
       <View style={styles.container}>
         {/* SVG Mask */}
         <StatusBar
-          barStyle="dark-content"
+          barStyle='light-content'
           translucent={true}
           backgroundColor="transparent"
         />
-
-        <View style={{width: width, alignItems: 'center', marginLeft: 12}}>
-          <GlassMask />
-        </View>
-
-        {/* Top Section */}
+      
         <View style={styles.topSection}>
-          <TouchableWithoutFeedback onPress={_handleGoBack}>
+          <TouchableOpacity onPress={_handleGoBack} style={{marginHorizontal:12,marginVertical:12}}>
             <BackBtn />
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
 
-          <LogoIcon style={styles.logoSection} />
+          {/* <LogoIcon style={styles.logoSection} /> */}
+          <View style={styles.logoSection}>{SVG_NAME.logoIcon}</View>
         </View>
 
         <View style={styles.headerComponent}>
@@ -65,37 +63,37 @@ export default AuthBaseScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
+
+    marginVertical: 36,
   },
   topSection: {
-    flexDirection: 'row',
     alignItems: 'baseline',
-    position: 'absolute',
-    paddingHorizontal: 16, // Add horizontal padding
-    zIndex: 1, // Ensure it's above the GlassMask
-    marginVertical: 56,
+    marginVertical:12
   },
   logoSection: {
-    marginHorizontal: 32,
+    alignItems:'center',
+    justifyContent:'center',
+     width:width
   },
   content: {
     flex: 1,
   },
   headerComponent: {
     alignItems: 'center',
+    marginHorizontal:12
   },
   headerText: {
     fontSize: FONT_SIZE.h28,
     fontFamily: FONT_FAMILY.GILORY_BOLD,
     letterSpacing: 0.5,
-    color: COLORS.fontDarkColor,
+    color: COLORS.white,
     lineHeight: 34.66,
   },
   descText: {
     fontSize: FONT_SIZE.h14,
     fontFamily: FONT_FAMILY.GILORY_REGULAR,
     lineHeight: 25,
-    color: COLORS.fontLightColor,
+    color: COLORS.white,
     letterSpacing: 0.5,
     alignItems: 'center',
   },
