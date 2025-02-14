@@ -4,7 +4,7 @@ import MyButton from '../../components/myButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {resetAllChecks} from '../../helpers/redux/slice/authSlice';
-import OpenAI from 'openai';
+
 import {KEYS} from '../../helpers/constant/apiBaseUrl';
 import axios from 'axios';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -13,7 +13,7 @@ import HomeBaseScreen from '../../components/homeBaseScreen';
 import Speedometer from '../../components/spedometer';
 
 const HomeScreen = () => {
-  const openAi = new OpenAI({apiKey: KEYS.OPEN_AI_KEY});
+  
   const dispatch = useDispatch();
   const _handleLogout = async () => {
     await AsyncStorage.removeItem('USERTOKEN');

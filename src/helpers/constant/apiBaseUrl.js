@@ -6,6 +6,6 @@ export const END_POINT={
 }
 
 export const KEYS={
-    OPEN_AI_KEY:'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',
+
     GEMINI_API_KEY:'AIzaSyAIDxuYBP0kE-Mwh8mQKe2xqaHXtU-kL1s'
 }
