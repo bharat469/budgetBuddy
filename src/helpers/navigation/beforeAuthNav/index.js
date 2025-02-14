@@ -8,7 +8,7 @@ import OnboardingScreen from '../../../screens/beforeAuth/onboarding';
 import MobileLogin from '../../../screens/beforeAuth/mobileLogin';
 import OtpScreen from '../../../screens/beforeAuth/otpScreen';
 import EmailLoginScreen from '../../../screens/beforeAuth/emailLoginScreen';
-import CreateAccountScreen from '../../../screens/beforeAuth/createAccountScreen';
+
 
 const BeforeAuthNav = () => {
     const beforeNav= createNativeStackNavigator()
@@ -19,7 +19,7 @@ const BeforeAuthNav = () => {
     <beforeNav.Screen name={RouteNames.mobileLogin} component={MobileLogin} options={{headerShown:false}} />
     <beforeNav.Screen name={RouteNames.otpScreen} component={OtpScreen} options={{headerShown:false}} />
     <beforeNav.Screen name={RouteNames.emailScreen} component={EmailLoginScreen} options={{headerShown:false}} />
-    <beforeNav.Screen name={RouteNames.createAccountScreen} component={CreateAccountScreen} options={{headerShown:false}} />
+
   </beforeNav.Navigator>
   )
 }

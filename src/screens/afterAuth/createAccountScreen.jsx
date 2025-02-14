@@ -16,7 +16,7 @@ const CreateAccountScreen = (props) => {
   const [data, setData] = useState({
     Name: '',
     Email: '',
-    phoneNumer: '',
+    Designation: '',
   });
   const [error, setErrors] = useState({});
   
@@ -64,16 +64,17 @@ const CreateAccountScreen = (props) => {
             onChangeText={(text)=>setData({...data,Name:text})}
           />
           <InputComponent
-            basicInputTitle={'Email (Optional)'}
+            basicInputTitle={'Email'}
             value={data.Email}
             onChangeText={(text)=>setData({...data,Email:text})}
           />
+          <InputComponent
+            basicInputTitle={'Designation'}
+            value={data.Designation}
+            onChangeText={(text)=>setData({...data,Designation:text})}
+          />
         </View>
-            <InputComponent
-              mode={MODE_NAMES.WITH_COUNTRY_CODE}
-              value={data.phoneNumer}
-              onChangeText={(text)=>setData({...data,phoneNumer:text})}
-            />
+        
               <MyButton
               btnText="Submit"
               additionalStyle={styles.btnStyle}
@@ -86,22 +87,7 @@ const CreateAccountScreen = (props) => {
               additionalStyle={{marginHorizontal: 12}}
             />
             </View>
-            <View style={{alignItems: 'center', marginVertical: 22}}>
-          <SepratorComponent />
-          <View style={styles.socialView}>
-            <SocialMediaIcon socialIcon={SVG_NAME.googleIcon} />
-            <SocialMediaIcon socialIcon={SVG_NAME.facebookIcon} />
-            <SocialMediaIcon socialIcon={SVG_NAME.appleIcon} />
-          </View>
-          <View style={{}}>
-        
-            <TextWithBtnLink
-              inititText={'By continuing, you accept the'}
-              btnText={'Terms of Service and Privacy Policy'}
-              additionalStyle={{marginHorizontal: 32}}
-            />
-          </View>
-          </View>
+      
 
     </AuthBaseScreen>
   );

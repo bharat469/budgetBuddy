@@ -6,6 +6,7 @@ import OnboardingScreenTwo from '../../assets/svg/onbordingAssets/onboardTwo.svg
 import OnboardingScreenThree from '../../assets/svg/onbordingAssets/onboardThree.svg'
 import LoginIcon from '../../assets/svg/login.svg'
 import LogoIcon from '../../assets/svg/logo.svg'
+import NotificationWithDot from '../../assets/svg/notificationWithDot.svg'
 
 export const SVG_NAME= {
  googleIcon:<GoogleIcon/>,
@@ -15,5 +16,6 @@ export const SVG_NAME= {
  onboardScreenTwo:<OnboardingScreenTwo/>,
  onboardScreenThree:<OnboardingScreenThree/>,
  loginIcon:<LoginIcon/>,
- logoIcon:<LogoIcon/>
+ logoIcon:<LogoIcon/>,
+ notificationWithDot:<NotificationWithDot/>
 }
